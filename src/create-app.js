@@ -84,7 +84,7 @@ if (process.env.NODE_ENV === 'development') {
 
 function createGitIgnore(target, files) {
   return new Promise((resolve, reject) => {
-    fs.writeFile(`${target}/src/index.tsx`, files.join('\n'), err => (err ? reject(err) : resolve()));
+    fs.writeFile(`${target}/.gitignore`, files.join('\n'), err => (err ? reject(err) : resolve()));
   });
 }
 
