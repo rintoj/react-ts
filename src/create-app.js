@@ -5,6 +5,7 @@ const path = require('path');
 const npm = require('./npm');
 const chalk = require('chalk');
 const ProgressBar = require('progress');
+const nameUtil = require('name-util');
 
 const progress = new ProgressBar(':message', {
   total: Infinity,
@@ -53,10 +54,13 @@ function printError(error) {
   console.log(chalk.red(`ERROR: ${error}`));
 }
 
-function usage() {
+function usage(name) {
   console.log();
   console.log(`
   You may use the following commands:
+
+  ${chalk.gray('# go to the project folder')}
+  ${chalk.yellow(`cd ${name}`)}
 
   ${chalk.gray('# development')}
   ${chalk.yellow('npm start')}            ${chalk.green('Serve')} the project
@@ -74,17 +78,19 @@ function usage() {
 }
 
 module.exports = function createApp(name) {
+  const projectName = nameUtil.toDashedName(name.replace(/^[^a-z0-9]$/gi, ''));
   const source = resolvePath(`${__dirname}/../project`);
-  const target = resolvePath(name);
+  const target = resolvePath(projectName);
 
   console.log('');
-  printProgress(`Creating application ${chalk.green(name)}`)
+  printProgress(`Creating application ${chalk.green(projectName)}`)
     .then(isExists.bind(this, target))
     .then(createTargetDir.bind(this, target))
     .then(copyDirectory.bind(this, source))
     .then(printProgress.bind(this, `${chalk.green('Installing node modules...')} This may take time.`))
-    // .then(npm.install.bind(this, target))
-    .then(printProgress.bind(this, chalk.green('Installing node modules... Done')))
-    .then(usage)
+    .then(npm.install.bind(this, target))
+    .then(printProgress.bind(this, `Installing node modules... ${chalk.green('Done')}`))
+    .then(printProgress.bind(this, `Created application ${chalk.green('successfully')}`))
+    .then(usage.bind(this, projectName))
     .catch(printError);
 };
