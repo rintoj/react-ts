@@ -3,9 +3,11 @@
 const fs = require('fs-extra');
 const path = require('path');
 const npm = require('./npm');
+const git = require('./git');
 const chalk = require('chalk');
-const ProgressBar = require('progress');
 const nameUtil = require('name-util');
+const packageJson = require('../project/package.json');
+const ProgressBar = require('progress');
 
 const progress = new ProgressBar(':message', {
   total: Infinity,
@@ -42,12 +44,50 @@ function copyDirectory(source, target) {
   });
 }
 
+function copyPackageJson(target, name) {
+  const updatedPackageJson = [
+    'name', 'version',
+  ].reduce((a, key) => {
+    const update = {};
+    if (key === 'name') {
+      update[key] = name;
+    } else if (key === 'version') {
+      update[key] = '0.0.1';
+    }
+    return Object.assign({}, a, update);
+  }, packageJson);
+
+  return new Promise((resolve, reject) => {
+    fs.writeJson(`${target}/package.json`, updatedPackageJson, err => (err ? reject(err) : resolve(target)));
+  });
+}
+
+function copyIndex(target, name) {
+  return new Promise((resolve, reject) => {
+    fs.writeFile(`${target}/src/index.tsx`, `
+import './style/app.scss'
+
+import * as React from 'react'
+import * as ReactDOM from 'react-dom'
+
+import { App } from './app'
+
+ReactDOM.render(<App />, document.getElementById('root'))
+
+// hot load application state when in development mode
+if (process.env.NODE_ENV === 'development') {
+  require('../node_modules/react-ts/src/hot-load')('${name}')
+}
+`, err => (err ? reject(err) : resolve()));
+  });
+}
+
 function printProgress(message) {
   progress.tick({
     message: chalk.gray(message),
   });
 
-  return new Promise(resolve => setTimeout(resolve, 1000));
+  return new Promise(resolve => setTimeout(resolve, 1500));
 }
 
 function printError(error) {
@@ -77,20 +117,39 @@ function usage(name) {
   `);
 }
 
+function initGit(target) {
+  return new Promise((resolve) => {
+    if (git.isAvailable()) {
+      return Promise.resolve()
+        .then(() => printProgress(`${chalk.green('Initialize git...')}`))
+        .then(() => git.init(target))
+        .then(() => git.addAll(target))
+        .then(() => git.commit('Initial commit'))
+        .then(() => printProgress(`Initialize git... ${chalk.green('done')}`))
+        .then(resolve);
+    }
+    return printProgress(`Git not available... ${chalk.yellow('skipping init git')}`).then(resolve);
+  });
+}
+
 module.exports = function createApp(name) {
   const projectName = nameUtil.toDashedName(name.replace(/^[^a-z0-9]$/gi, ''));
   const source = resolvePath(`${__dirname}/../project`);
   const target = resolvePath(projectName);
 
   console.log('');
-  printProgress(`Creating application ${chalk.green(projectName)}`)
-    .then(isExists.bind(this, target))
-    .then(createTargetDir.bind(this, target))
-    .then(copyDirectory.bind(this, source))
-    .then(printProgress.bind(this, `${chalk.green('Installing node modules...')} This may take time.`))
-    .then(npm.install.bind(this, target))
-    .then(printProgress.bind(this, `Installing node modules... ${chalk.green('Done')}`))
-    .then(printProgress.bind(this, `Created application ${chalk.green('successfully')}`))
-    .then(usage.bind(this, projectName))
+  Promise.resolve()
+    .then(() => printProgress(`Creating application ${chalk.green(projectName)}`))
+    .then(() => isExists(target))
+    .then(() => createTargetDir(target))
+    .then(() => copyDirectory(source, target))
+    .then(() => copyPackageJson(target, name))
+    .then(() => copyIndex(target, name))
+    .then(() => initGit(target))
+    .then(() => printProgress(`${chalk.green('Installing node modules...')} This may take time.`))
+    .then(() => npm.install(target))
+    .then(() => printProgress(`Installing node modules... ${chalk.green('Done')}`))
+    .then(() => printProgress(`Created application ${chalk.green('successfully')}`))
+    .then(() => usage(projectName))
     .catch(printError);
 };

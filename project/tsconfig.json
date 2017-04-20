@@ -5,7 +5,7 @@
     "moduleResolution": "node",
     "jsx": "react",
     "pretty": true,
-    "outDir": "./build/",
+    "outDir": "./dist",
     "allowSyntheticDefaultImports": true,
     "noImplicitAny": false,
     "preserveConstEnums": true,
@@ -17,11 +17,13 @@
     "noUnusedParameters": false,
     "noUnusedLocals": true,
     "lib": [
-      "dom",
-      "es2015",
-      "node"
+      "dom", "es2015"
     ]
   },
+  "include": [
+    "src/**/*.ts",
+    "src/**/*.tsx"
+  ],
   "filesGlob": [
     "typings/index.d.ts",
     "src/**/*.ts",

@@ -5,10 +5,9 @@ const chalk = require('chalk');
 const webpack = require('webpack');
 const WebpackDevServer = require('webpack-dev-server');
 
-module.exports = function(port, host) {
-
-  const targetHost = host || 'localhost'
-  const targetPort = port || 8080
+module.exports = function serve(port, host) {
+  const targetHost = host || 'localhost';
+  const targetPort = port || 8080;
 
   process.env.NODE_ENV = 'development';
   process.env.HOST = targetHost;
@@ -24,8 +23,8 @@ module.exports = function(port, host) {
   });
 
   server.listen(targetPort, targetHost, () => {
-    console.log()
+    console.log();
     console.log(chalk.gray(`Starting server at ${chalk.green(`http://${targetHost}:${targetPort}`)}`));
-    console.log()
+    console.log();
   });
-}
+};

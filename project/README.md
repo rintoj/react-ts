@@ -2,7 +2,9 @@
 
 This project is generated using [`react-ts`](https://www.npmjs.com/package/react-ts) command line interface.
 
-This is configured with:
+## About
+
+This project is configured with
   - [TypeScript](https://www.typescriptlang.org/)
   - [WebPack](https://webpack.js.org/)
   - [Hot Module Replacement](https://webpack.js.org/concepts/hot-module-replacement/) with app state preservation
@@ -27,9 +29,11 @@ This is configured with:
 
 ```
 
-# How To Develop using React Reflux
+# Get Started with Reflux
 
-**React reflux** is a predictable state container for React apps just like REDUX. It helps you implement a unidirectional data flow (Flux architecture) in an easy and elegant way without much boilerplate code. The main objective of this module is to provide an implementation that has minimal touch points, while providing all the benefits of Redux. This is inspired by [refluxjs](https://github.com/reflux/refluxjs), [redux](http://redux.js.org/) & [angular-reflux](https://github.com/rintoj/angular-reflux) and uses TypeScript decorators.
+**React reflux** is a predictable state container for React apps just like REDUX. It helps you implement a unidirectional data flow (Flux architecture) in an easy and elegant way without much boilerplate code. The main objective of this module is to provide an implementation that has minimal touch points, while providing all the benefits of Redux. This is inspired by [refluxjs](https://github.com/reflux/refluxjs), [redux](http://redux.js.org/) & [angular-reflux](https://github.com/rintoj/angular-reflux) and uses TypeScript decorators. This module derives many of it's features from MobX (flow is shown below).
+
+![Flux flow](docs/images/flow.png)
 
 ## 5 Simple Steps
 
@@ -213,3 +217,63 @@ export class AppComponent extends React.Component<{}, {}> {
   ...
 }
 ```
+
+# Testing
+
+## Write Unit Test
+
+Create a file with extension `.spec.ts{x}` at the same directory as the module your are trying to test. A sample test suite may be as below:
+
+```ts
+import fontWeights from './fontWeights'
+
+describe('fontWeights', () => {
+  it('should be defined', () => {
+    expect(fontWeights).toBeDefined()
+  })
+
+  it('should contain normal', () => {
+    expect(fontWeights.normal).toBeDefined()
+  })
+
+  it('should contain b', () => {
+    expect(fontWeights.b).toBeDefined()
+  })
+
+  it('should contain fw1 to fw9 styles', () => {
+    for (let index = 1; index <= 9; index++) {
+      expect((fontWeights as any)[`fw${index}`]).toBeDefined()
+    }
+  })
+})
+```
+
+## Run Unit Test
+
+You can run the test suite once with the following command:
+
+```bash
+npm test  # 'npm t' will also work
+```
+
+If everything is successful you should see report like this:
+
+![Test Suite](docs/images/test-suite.png)
+
+## Test Driven Development (TDD)
+
+You can run tests in watch mode using the following command:
+
+```bash
+npm run tdd  # run tests in watch mode.
+```
+
+This will ensure that the tests are run every time you make changes to the source code or to the test suites.
+
+## Code Coverage Report
+
+Test suite scripts also take care of capturing the code coverage report. It is desirable to get all items to green. A sample report will look like this:
+
+![Coverage Report](docs/images/coverage-summary.png)
+
+You can also access an html version of this report at [./coverage/lcov-report/index.html](coverage/lcov-report/index.html) (only from your local machine - coverage reports are not checked in)
