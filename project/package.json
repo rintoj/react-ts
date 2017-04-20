@@ -16,7 +16,7 @@
     "build:dev": "node node_modules/react-ts -- build development"
   },
   "devDependencies": {
-    "react-ts": "^1.0.0"
+    "react-ts": "^1.0.1"
   },
   "dependencies": {
     "react": "^15.5.3",
