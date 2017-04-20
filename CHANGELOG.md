@@ -1,3 +1,7 @@
+# v1.0.2
+
+- Add executable to package.json using `bin`
+
 # v1.0.1
 
 - Update `react-ts` version in project/package.json
