@@ -82,6 +82,12 @@ if (process.env.NODE_ENV === 'development') {
   });
 }
 
+function createGitIgnore(target, files) {
+  return new Promise((resolve, reject) => {
+    fs.writeFile(`${target}/src/index.tsx`, files.join('\n'), err => (err ? reject(err) : resolve()));
+  });
+}
+
 function printProgress(message) {
   progress.tick({
     message: chalk.gray(message),
@@ -144,10 +150,11 @@ module.exports = function createApp(name) {
     .then(() => createTargetDir(target))
     .then(() => copyDirectory(source, target))
     .then(() => copyPackageJson(target, name))
+    .then(() => createGitIgnore(target, ['node_modules/', 'coverage/', 'dist/']))
     .then(() => copyIndex(target, name))
     .then(() => initGit(target))
     .then(() => printProgress(`${chalk.green('Installing node modules...')} This may take time.`))
-    .then(() => npm.install(target))
+    // .then(() => npm.install(target))
     .then(() => printProgress(`Installing node modules... ${chalk.green('Done')}`))
     .then(() => printProgress(`Created application ${chalk.green('successfully')}`))
     .then(() => usage(projectName))
