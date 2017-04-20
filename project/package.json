@@ -16,7 +16,7 @@
     "build:dev": "node node_modules/react-ts -- build development"
   },
   "devDependencies": {
-    "react-ts": "/Users/839655roje/data/projects/react-ts"
+    "react-ts": "^1.0.0"
   },
   "dependencies": {
     "react": "^15.5.3",
