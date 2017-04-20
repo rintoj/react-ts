@@ -1,4 +1,4 @@
-import { webpackService } from './webpack.service'
+import { webpackService } from './todo-service'
 
 export const services = {
   webpackService
