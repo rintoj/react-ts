@@ -1,5 +1,5 @@
-import { webpackService } from './todo-service'
+import { todoService } from './todo-service'
 
 export const services = {
-  webpackService
+  todoService
 }
