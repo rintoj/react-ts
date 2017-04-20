@@ -32,7 +32,6 @@ function createTargetDir(target) {
 
 function copyDirectory(source, target) {
   return new Promise((resolve, reject) => {
-    console.log(source, target);
     fs.copy(source, target, err => (err ? reject(err) : resolve(target)));
   });
 }
@@ -50,7 +49,8 @@ function printError(error) {
 module.exports = function createApp(name) {
   const source = resolvePath(`${__dirname}/../project`);
   const target = resolvePath(name);
-  console.log(`create app from ${source} to ${target}`);
+
+  printMessage(`Creating application ${chalk.green(name)}`);
 
   isExists(target)
     .then(createTargetDir.bind(this, target))
