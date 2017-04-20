@@ -1,3 +1,7 @@
+# v1.0.3
+
+- Fix todo service export
+
 # v1.0.2
 
 - Add executable to package.json using `bin`
