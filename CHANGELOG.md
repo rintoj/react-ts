@@ -1,3 +1,6 @@
+# v1.0.5
+- Revert npm install
+
 # v1.0.4
 - Add .gitignore file
 
