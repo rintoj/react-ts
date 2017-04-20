@@ -9,8 +9,7 @@ const webpack = require('webpack');
 const copyPublicFolder = require('./copy');
 const FileSizeReporter = require('react-dev-utils/FileSizeReporter');
 
-module.exports = function build(environment) {
-
+module.exports = function buildProject(environment) {
   process.env.NODE_ENV = environment || process.env.NODE_ENV || 'production';
 
   const isProd = process.env.NODE_ENV === 'production';
@@ -110,5 +109,4 @@ module.exports = function build(environment) {
     .then(previousFileSizes => clean()
       .then(() => build(previousFileSizes))
       .then(copyPublicFolder));
-
-}
+};
