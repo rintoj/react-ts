@@ -1,17 +1,31 @@
-process.env.NODE_ENV = 'development';
+/* eslint import/no-extraneous-dependencies: ["error", {"peerDependencies": true}] */
+/* eslint-disable no-console */
 
-var webpack = require("webpack");
-var webpackConfig = require('../config/webpack.config')
-var WebpackDevServer = require("webpack-dev-server");
+const chalk = require('chalk');
+const webpack = require('webpack');
+const WebpackDevServer = require('webpack-dev-server');
 
-var compiler = webpack(webpackConfig)
-var server = new WebpackDevServer(compiler, {
-  hot: true,
-  stats: {
-    colors: true
-  }
-});
+module.exports = function(port, host) {
 
-server.listen(8080, 'localhost', function() {
-  console.log('started server at http://localhost:8080')
-})
+  const targetHost = host || 'localhost'
+  const targetPort = port || 8080
+
+  process.env.NODE_ENV = 'development';
+  process.env.HOST = targetHost;
+  process.env.PORT = targetPort;
+
+  const webpackConfig = require('../config/webpack.config');
+  const compiler = webpack(webpackConfig);
+  const server = new WebpackDevServer(compiler, {
+    hot: true,
+    stats: {
+      colors: true,
+    },
+  });
+
+  server.listen(targetPort, targetHost, () => {
+    console.log()
+    console.log(chalk.gray(`Starting server at ${chalk.green(`http://${targetHost}:${targetPort}`)}`));
+    console.log()
+  });
+}

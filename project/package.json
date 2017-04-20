@@ -1,0 +1,22 @@
+{
+  "name": "react-ts",
+  "version": "0.0.1",
+  "description": "React project with TypeScript and WebPack",
+  "private": true,
+  "main": "dist/main.bundle.js",
+  "scripts": {
+    "start": "node node_modules/react-ts -- serve 8080",
+    "build": "node node_modules/react-ts -- build",
+    "build:dev": "node node_modules/react-ts -- build development",
+    "lint": "tslint src/**/*.ts"
+  },
+  "devDependencies": {
+    "react-ts": "/Users/839655roje/data/projects/react-ts"
+  },
+  "dependencies": {
+    "react": "^15.5.3",
+    "react-dom": "^15.5.3",
+    "react-reflux": "^1.0.0",
+    "reflect-metadata": "^0.1.10"
+  }
+}

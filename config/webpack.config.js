@@ -1,6 +1,6 @@
 /* eslint-disable no-console */
-const env = require('./config/env.js')('');
-const paths = require('./config/paths');
+const env = require('./env.js')('');
+const paths = require('./paths');
 const webpack = require('webpack');
 const ManifestPlugin = require('webpack-manifest-plugin');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
@@ -11,6 +11,8 @@ const CaseSensitivePathsPlugin = require('case-sensitive-paths-webpack-plugin');
 const WatchMissingNodeModulesPlugin = require('react-dev-utils/WatchMissingNodeModulesPlugin');
 
 const isProd = process.env.NODE_ENV === 'production';
+const host = process.env.host || 'localhost';
+const port = process.env.PORT || 8080;
 
 const extractSass = new ExtractTextPlugin({
   filename: '[name].min.css',
@@ -41,10 +43,10 @@ module.exports = {
   cache: !isProd,
   devtool: isProd ? 'source-map' : 'cheap-module-source-map',
   entry: [
-    paths.appModule
+    paths.appModule,
   ].concat(isProd ? [] : [
     'webpack/hot/dev-server',
-    'webpack-dev-server/client?http://localhost:8080'
+    `webpack-dev-server/client?http://${host}:${port}`,
   ]),
   output: {
     path: paths.dist,
