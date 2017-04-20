@@ -97,6 +97,8 @@ function printProgress(message) {
 }
 
 function printError(error) {
+  console.log();
+  console.log();
   console.log(chalk.red(`ERROR: ${error}`));
 }
 

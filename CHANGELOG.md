@@ -1,3 +1,6 @@
+# v1.0.6
+- Update error log
+
 # v1.0.5
 - Revert npm install
 
