@@ -1,3 +1,6 @@
+# v1.0.8
+- Fix .gitignore
+
 # v1.0.7
 - Fix .gitignore
 
