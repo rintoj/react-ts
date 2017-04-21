@@ -146,7 +146,7 @@ module.exports = function createApp(name) {
   const target = resolvePath(projectName);
 
   console.log('');
-  Promise.resolve()
+  return Promise.resolve()
     .then(() => printProgress(`Creating application ${chalk.green(projectName)}`))
     .then(() => isExists(target))
     .then(() => createTargetDir(target))
