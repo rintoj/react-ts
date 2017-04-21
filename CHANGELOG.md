@@ -1,3 +1,6 @@
+# v1.0.9
+- Return promise from Create app method
+
 # v1.0.8
 - Fix .gitignore
 

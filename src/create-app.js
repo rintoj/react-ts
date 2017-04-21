@@ -140,7 +140,20 @@ function initGit(target) {
   });
 }
 
-module.exports = function createApp(name) {
+function installNodeModules(target, run) {
+  if (!run) return Promise.resolve();
+
+  return Promise.resolve()
+    .then(() => printProgress(`${chalk.green('Installing node modules...')} This may take time.`))
+    .then(() => npm.install(target))
+    .then(() => printProgress(`Installing node modules... ${chalk.green('Done')}`));
+}
+
+module.exports = function createApp(name, options) {
+  const config = Object.assign({
+    installModules: true,
+  }, options);
+
   const projectName = nameUtil.toDashedName(name.replace(/^[^a-z0-9]$/gi, ''));
   const source = resolvePath(`${__dirname}/../project`);
   const target = resolvePath(projectName);
@@ -155,9 +168,7 @@ module.exports = function createApp(name) {
     .then(() => createGitIgnore(target, ['node_modules/', 'coverage/', 'dist/']))
     .then(() => copyIndex(target, name))
     .then(() => initGit(target))
-    .then(() => printProgress(`${chalk.green('Installing node modules...')} This may take time.`))
-    .then(() => npm.install(target))
-    .then(() => printProgress(`Installing node modules... ${chalk.green('Done')}`))
+    .then(() => installNodeModules(target, config && config.installModules))
     .then(() => printProgress(`Created application ${chalk.green('successfully')}`))
     .then(() => usage(projectName))
     .catch(printError);
