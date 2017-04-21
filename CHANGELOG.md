@@ -1,3 +1,6 @@
+# v1.0.10
+- add `noUsageInfo` option to create app method
+
 # v1.0.9
 - Return promise from Create app method
 - Add installModules options to create app method

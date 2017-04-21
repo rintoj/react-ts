@@ -102,7 +102,9 @@ function printError(error) {
   console.log(chalk.red(`ERROR: ${error}`));
 }
 
-function usage(name) {
+function usage(name, noUsageInfo) {
+  if (noUsageInfo) return;
+
   console.log();
   console.log(`
   You may use the following commands:
@@ -152,6 +154,7 @@ function installNodeModules(target, run) {
 module.exports = function createApp(name, options) {
   const config = Object.assign({
     installModules: true,
+    noUsageInfo: true,
   }, options);
 
   const projectName = nameUtil.toDashedName(name.replace(/^[^a-z0-9]$/gi, ''));
@@ -170,6 +173,6 @@ module.exports = function createApp(name, options) {
     .then(() => initGit(target))
     .then(() => installNodeModules(target, config && config.installModules))
     .then(() => printProgress(`Created application ${chalk.green('successfully')}`))
-    .then(() => usage(projectName))
+    .then(() => usage(projectName, config && config.noUsageInfo))
     .catch(printError);
 };
