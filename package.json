@@ -61,7 +61,17 @@
   },
   "author": "Rinto Jose",
   "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/rintoj/react-ts/issues"
+  },
+  "homepage": "https://github.com/rintoj/react-ts#readme",
   "repository": {
-    "git": "https://github.com/rintoj/react-ts.git"
-  }
+    "type": "git",
+    "url": "git+https://github.com/rintoj/react-ts.git"
+  },
+  "keywords": [
+    "React",
+    "TypeScript",
+    "Reflux"
+  ]
 }
