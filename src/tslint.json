@@ -119,6 +119,7 @@
     "quotemark": [
       true,
       "single",
+      "jsx-double",
       "avoid-escape"
     ],
     "semicolon": [
