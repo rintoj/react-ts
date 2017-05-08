@@ -6,7 +6,7 @@ const npm = require('./npm');
 const git = require('./git');
 const chalk = require('chalk');
 const nameUtil = require('name-util');
-const packageJson = require('../project/package.json');
+const packageJson = require('../src/package.json');
 const ProgressBar = require('progress');
 
 const progress = new ProgressBar(':message', {
@@ -158,7 +158,7 @@ module.exports = function createApp(name, options) {
   }, options);
 
   const projectName = nameUtil.toDashedName(name.replace(/^[^a-z0-9]$/gi, ''));
-  const source = resolvePath(`${__dirname}/../project`);
+  const source = resolvePath(`${__dirname}/..`);
   const target = resolvePath(projectName);
 
   console.log('');
