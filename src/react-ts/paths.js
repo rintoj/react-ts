@@ -1,11 +1,11 @@
 const path = require('path');
 
 function resolvePath(relativePath) {
-  return path.resolve(`${__dirname}/../../../${relativePath}`);
+  return path.resolve(`${__dirname}/../${relativePath}`);
 }
 
 module.exports = {
-  appModule: './src/index.tsx',
+  appModule: resolvePath('./src/index.tsx'),
   template: resolvePath('src/assets/index.html'),
   splash: resolvePath('src/assets/splash.html'),
   assets: resolvePath('src/assets'),

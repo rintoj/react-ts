@@ -74,7 +74,7 @@ import { App } from './app'
 
 // hot load application state when in development mode
 if (process.env.NODE_ENV === 'development') {
-  require('../node_modules/react-ts/src/hot-load')('${name}')
+  require('../react-ts/hot-load')('${name}')
 }
 
 ReactDOM.render(<App />, document.getElementById('root'))

@@ -1,3 +1,7 @@
+# v1.1.0
+- fix path issues
+- breaking change: scripts will now point to `~/react-ts` instead of `~/node_modules/react-ts`
+
 # v1.0.14
 - fix dependencies and progress messages
 
