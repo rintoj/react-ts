@@ -6,14 +6,14 @@
   "main": "dist/main.bundle.js",
   "scripts": {
     "start": "node react-ts -- serve 8080",
+    "build": "node react-ts -- build",
+    "build:dev": "node react-ts -- build development",
     "lint": "tslint src/**/*.tsx",
     "tdd": "concurrently -r 'npm run watch' 'npm run test:watch'",
     "test": "npm run compile && istanbul cover ./node_modules/mocha/bin/_mocha -- dist/**/*.spec.js",
     "test:watch": "nodemon --delay 1 --watch dist --exec 'istanbul cover ./node_modules/mocha/bin/_mocha -- dist/**/*.spec.js'",
     "compile": "tsc",
-    "watch": "npm run compile -- -w",
-    "build": "node react-ts -- build",
-    "build:dev": "node react-ts -- build development"
+    "watch": "npm run compile -- -w"
   },
   "devDependencies": {
     "react-ts": "^1.0.11"

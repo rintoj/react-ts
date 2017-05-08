@@ -13,7 +13,7 @@ module.exports = function serve(port, host) {
   process.env.HOST = targetHost;
   process.env.PORT = targetPort;
 
-  const webpackConfig = require('../config/webpack.config');
+  const webpackConfig = require('./config/webpack.config');
   const compiler = webpack(webpackConfig);
   const server = new WebpackDevServer(compiler, {
     hot: true,
