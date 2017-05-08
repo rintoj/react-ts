@@ -1,3 +1,6 @@
+# v1.0.13
+- fix hot load order problem in `index.tsx`
+
 # v1.0.12
 - move devDependencies to the project's `package.json`, so that installing `react-ts` becomes fast
 - add `jsx-double` to `tslint.json`
