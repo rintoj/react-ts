@@ -6,7 +6,7 @@ const npm = require('./npm');
 const git = require('./git');
 const chalk = require('chalk');
 const nameUtil = require('name-util');
-const packageJson = require('../src/package.json');
+const packageJson = require('../package.json');
 const ProgressBar = require('progress');
 
 const progress = new ProgressBar(':message', {
@@ -72,12 +72,12 @@ import * as ReactDOM from 'react-dom'
 
 import { App } from './app'
 
-ReactDOM.render(<App />, document.getElementById('root'))
-
 // hot load application state when in development mode
 if (process.env.NODE_ENV === 'development') {
   require('../node_modules/react-ts/src/hot-load')('${name}')
 }
+
+ReactDOM.render(<App />, document.getElementById('root'))
 `, err => (err ? reject(err) : resolve()));
   });
 }
