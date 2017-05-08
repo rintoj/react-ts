@@ -4,7 +4,7 @@ const fs = require('fs-extra');
 const path = require('path');
 const chalk = require('chalk');
 const clean = require('./clean');
-const paths = require('./config/paths');
+const paths = require('./paths');
 const webpack = require('webpack');
 const copyPublicFolder = require('./copy');
 const FileSizeReporter = require('react-dev-utils/FileSizeReporter');
@@ -14,7 +14,7 @@ module.exports = function buildProject(environment) {
 
   const isProd = process.env.NODE_ENV === 'production';
   const useYarn = fs.existsSync(paths.yarnLockFile);
-  const webpackConfig = require('./config/webpack.config');
+  const webpackConfig = require('./webpack.config');
   const printFileSizesAfterBuild = FileSizeReporter.printFileSizesAfterBuild;
   const measureFileSizesBeforeBuild = FileSizeReporter.measureFileSizesBeforeBuild;
 

@@ -5,9 +5,9 @@ import * as ReactDOM from 'react-dom'
 
 import { App } from './app'
 
-ReactDOM.render(<App />, document.getElementById('root'))
-
 // hot load application state when in development mode
 if (process.env.NODE_ENV === 'development') {
-  require('../node_modules/react-ts/src/hot-load')('app-name')
+  require('../react-ts/hot-load')('app-name')
 }
+
+ReactDOM.render(<App />, document.getElementById('root'))
