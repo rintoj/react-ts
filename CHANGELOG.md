@@ -1,3 +1,6 @@
+# v1.0.14
+- fix dependencies and progress messages
+
 # v1.0.13
 - fix hot load order problem in `index.tsx`
 
