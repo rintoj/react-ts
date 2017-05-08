@@ -153,7 +153,7 @@ function installNodeModules(target, run) {
 
 module.exports = function createApp(name, options) {
   const config = Object.assign({
-    installModules: true,
+    installModules: false,
     noUsageInfo: true,
   }, options);
 
