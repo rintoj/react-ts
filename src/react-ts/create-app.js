@@ -88,12 +88,15 @@ function createGitIgnore(target, files) {
   });
 }
 
-function printProgress(message) {
+function printProgress(message, completed) {
   progress.tick({
-    message: chalk.gray(message),
+    message: `  ${completed ? chalk.green('✓') : chalk.yellow('➟')} ${chalk.gray(message)}`,
   });
 
-  return new Promise(resolve => setTimeout(resolve, 1500));
+  return new Promise(resolve => setTimeout(() => {
+    if (completed) console.log();
+    resolve();
+  }, 500));
 }
 
 function printError(error) {
@@ -103,14 +106,21 @@ function printError(error) {
 }
 
 function usage(name, noUsageInfo) {
-  if (noUsageInfo) return;
+  if (noUsageInfo) {
+    console.log();
+    printProgress(chalk.green('Completed'));
+    return;
+  }
 
-  console.log();
   console.log(`
-  You may use the following commands:
+
+  Use the following commands to get started:
 
   ${chalk.gray('# go to the project folder')}
   ${chalk.yellow(`cd ${name}`)}
+
+  ${chalk.gray('# install modules')}
+  ${chalk.yellow('npm install')}          ${chalk.green('Install')} modules (run once)
 
   ${chalk.gray('# development')}
   ${chalk.yellow('npm start')}            ${chalk.green('Serve')} the project
@@ -135,7 +145,7 @@ function initGit(target) {
         .then(() => git.init(target))
         .then(() => git.addAll(target))
         .then(() => git.commit('Initial commit'))
-        .then(() => printProgress(`Initialize git... ${chalk.green('done')}`))
+        .then(() => printProgress('Initialize git', true))
         .then(resolve);
     }
     return printProgress(`Git not available... ${chalk.yellow('skipping init git')}`).then(resolve);
@@ -148,7 +158,7 @@ function installNodeModules(target, run) {
   return Promise.resolve()
     .then(() => printProgress(`${chalk.green('Installing node modules...')} This may take time.`))
     .then(() => npm.install(target))
-    .then(() => printProgress(`Installing node modules... ${chalk.green('Done')}`));
+    .then(() => printProgress('Installing node modules', true));
 }
 
 module.exports = function createApp(name, options) {
@@ -163,16 +173,18 @@ module.exports = function createApp(name, options) {
 
   console.log('');
   return Promise.resolve()
-    .then(() => printProgress(`Creating application ${chalk.green(projectName)}`))
     .then(() => isExists(target))
+    .then(() => printProgress('Creating target directory...'))
     .then(() => createTargetDir(target))
+    .then(() => printProgress('Creating target directory', true))
+    .then(() => printProgress('Creating project files... '))
     .then(() => copyDirectory(source, target))
     .then(() => copyPackageJson(target, name))
-    .then(() => createGitIgnore(target, ['node_modules/', 'coverage/', 'dist/']))
     .then(() => copyIndex(target, name))
+    .then(() => printProgress('Creating project files', true))
+    .then(() => createGitIgnore(target, ['node_modules/', 'coverage/', 'dist/']))
     .then(() => initGit(target))
-    .then(() => installNodeModules(target, config && config.installModules))
-    .then(() => printProgress(`Created application ${chalk.green('successfully')}`))
-    .then(() => usage(projectName, config && config.noUsageInfo))
+    .then(() => installNodeModules(target, config.installModules))
+    .then(() => usage(projectName, config.noUsageInfo))
     .catch(printError);
 };
