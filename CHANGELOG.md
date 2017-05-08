@@ -1,3 +1,10 @@
+# v1.0.12
+- move devDependencies to the project's `package.json`, so that installing `react-ts` becomes fast
+- add `jsx-double` to `tslint.json`
+
+# v1.0.11
+- move `react-ts` outside of node modules
+
 # v1.0.10
 - add `noUsageInfo` option to create app method
 
