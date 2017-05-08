@@ -13,12 +13,12 @@ registerCommand('create <name>', 'Create react application with TypeScript and W
 registerCommand('serve [port]', 'Serve the project', port => serve(port));
 registerCommand('build [environment]', 'Build the project', environment => build(environment));
 
-program.action(function() {
+program.action(() => {
   program.help();
-})
+});
 
 program.parse(process.argv);
-// console.log(program)
+
 if (program.args.length === 0) {
   program.help();
 }
