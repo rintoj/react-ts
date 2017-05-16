@@ -1,3 +1,6 @@
+# v1.1.1
+- fix git invocation on Windows #2
+
 # v1.1.0
 - fix path issues
 - breaking change: scripts will now point to `~/react-ts` instead of `~/node_modules/react-ts`
