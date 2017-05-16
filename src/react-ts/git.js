@@ -13,7 +13,7 @@ module.exports = (function gitCommands() {
       if (target != null) {
         shell.cd(target);
       }
-      shell.exec(`git${isWin ? '.cmd' : ''} ${command}`, {
+      shell.exec(`git ${command}`, {
         silent: true,
       }, (code, stdout, stderr) => {
         if (code !== 0) {
@@ -41,7 +41,11 @@ module.exports = (function gitCommands() {
   git.addAll = addAll;
 
   function commit(message, target) {
-    return run(`commit -a -m '${message}'`, target);
+    if (isWin) {
+      return run(`commit -a -m "${message}"`, target);
+    } else {
+      return run(`commit -a -m '${message}'`, target);
+    }
   }
   git.commit = commit;
 
