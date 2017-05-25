@@ -4,10 +4,12 @@ import * as React from 'react'
 import * as ReactDOM from 'react-dom'
 
 import { App } from './app'
+import { INITIAL_STATE } from './state'
+import { initialize } from 'statex'
 
-// hot load application state when in development mode
-if (process.env.NODE_ENV === 'development') {
-  require('../react-ts/hot-load')('app-name')
-}
+initialize(INITIAL_STATE, {
+  hotLoad: process.env.NODE_ENV !== 'production',
+  domain: 'todo'
+})
 
 ReactDOM.render(<App />, document.getElementById('root'))

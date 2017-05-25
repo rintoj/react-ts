@@ -1,7 +1,7 @@
 import * as React from 'react'
 
 import { AppState, Todo } from '../../state'
-import { data, inject } from 'react-reflux'
+import { data, inject } from 'statex/react'
 
 import { TodoItem } from '..'
 

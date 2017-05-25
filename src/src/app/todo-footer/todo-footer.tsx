@@ -1,6 +1,6 @@
 import * as React from 'react'
 
-import { data, inject } from 'react-reflux'
+import { data, inject } from 'statex/react'
 
 import { AppState } from '../../state'
 import { RemoveCompletedTodosAction } from '../../action'

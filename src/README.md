@@ -57,7 +57,7 @@ export interface AppState {
 Define actions as classes with the necessary arguments passed on to the constructor. This way we will benefit from the type checking; never again we will miss-spell an action, miss a required parameter or pass a wrong parameter. Remember to extend the action from `Action` class. This makes your action listenable and dispatch-able.
 
 ```ts
-import { Action } from 'react-reflux';
+import { Action } from 'statex/react';
 
 export class AddTodoAction extends Action {
   constructor(public todo: Todo) { super(); }
@@ -70,7 +70,7 @@ Use `@action` decorator to bind a reducer function with an Action. The second pa
 ```ts
 import { AppState } from '../state';
 import { AddTodoAction } from '../action';
-import { action, store } from 'react-reflux';
+import { action, store } from 'statex/react';
 
 @store
 export class TodoStore {
@@ -101,7 +101,7 @@ Use `@data` decorator and a selector function (parameter to the decorator) to ge
 
 ```ts
 import * as React from 'react'
-import { data, inject } from 'react-reflux'
+import { data, inject } from 'statex/react'
 
 class Props {
   @data((state: AppState) => state.todos)

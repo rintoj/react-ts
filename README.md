@@ -1,6 +1,6 @@
 # React TS
 
-Create React apps using TypeScript 2, WebPack 2, Reflux, Mocha, Chai, with no build configuration. React TS works on macOS, Windows, and Linux. If something doesn’t work please file an issue.
+Create React apps using TypeScript 2, WebPack 2, StateX, Mocha, Chai, with pre-configured build scripts for dev and production. React TS works on macOS, Windows, and Linux. If something doesn’t work please file an issue.
 
 ## About
 
@@ -8,7 +8,7 @@ This project is configured with
   - [TypeScript](https://www.typescriptlang.org/)
   - [WebPack](https://webpack.js.org/)
   - [Hot Module Replacement](https://webpack.js.org/concepts/hot-module-replacement/) with app state preservation
-  - [React Reflux](https://github.com/rintoj/react-reflux) - (an implementation of flux)
+  - [StateX](https://github.com/rintoj/statex) - (an implementation of flux)
   - [Mocha](https://mochajs.org/) & [Chai](http://chaijs.com/) for testing
 
 ## Usage
@@ -69,31 +69,28 @@ todo
 │   │   ├── app.spec.tsx
 │   │   ├── app.tsx
 │   │   ├── index.ts
-│   │   ├── todo-filter
-│   │   │   ├── index.ts
-│   │   │   └── todo-filter.tsx
 │   │   ├── todo-footer
 │   │   │   ├── index.ts
+│   │   │   ├── todo-filter.tsx
 │   │   │   └── todo-footer.tsx
 │   │   ├── todo-header
 │   │   │   ├── index.ts
 │   │   │   └── todo-header.tsx
-│   │   ├── todo-item
-│   │   │   ├── index.ts
-│   │   │   └── todo-item.tsx
 │   │   └── todo-list
 │   │       ├── index.ts
-│   │       └── todo-list.tsx
+│   │       ├── todo-list.tsx
+│   │       └── todo-item.tsx
 │   ├── assets
 │   │   ├── favicon.ico
-│   │   ├── index.html
 │   │   └── logo.svg
+│   ├── index.html
 │   ├── index.tsx
 │   ├── service
 │   │   ├── index.ts
 │   │   └── todo-service.ts
 │   ├── state
 │   │   ├── app-state.ts
+│   │   ├── initial-state.ts
 │   │   ├── index.ts
 │   │   └── todo.ts
 │   ├── store

@@ -1,6 +1,6 @@
 import { Filter, Todo } from '../state'
 
-import { Action } from 'react-reflux'
+import { Action } from 'statex/react'
 
 export class AddTodoAction extends Action {
   constructor(public todo: Todo) { super() }

@@ -1,8 +1,10 @@
 /* eslint-disable no-console */
 const env = require('./env.js')('');
 const paths = require('./paths');
+const chalk = require('chalk');
 const webpack = require('webpack');
 const ManifestPlugin = require('webpack-manifest-plugin');
+const ProgressBarPlugin = require('progress-bar-webpack-plugin');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
 const ExtractTextPlugin = require('extract-text-webpack-plugin');
 const InterpolateHtmlPlugin = require('react-dev-utils/InterpolateHtmlPlugin');
@@ -115,6 +117,12 @@ module.exports = {
   plugins: [
 
     /** common plugins */
+    new ProgressBarPlugin({
+      format: `  :bar ${chalk.green.bold(':percent')} (:etas remaining) ${chalk.gray(':msg...')}`,
+      incomplete: chalk.gray('░'),
+      complete: chalk.yellow('█'),
+      head: '»',
+    }),
     new InterpolateHtmlPlugin(env.raw),
     new HtmlWebpackPlugin(Object.assign({
       filename: 'index.html',
