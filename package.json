@@ -1,6 +1,6 @@
 {
   "name": "react-ts",
-  "version": "2.0.0",
+  "version": "2.0.1",
   "description": "Create React apps using TypeScript 2, WebPack 2, StateX, Mocha, Chai, with pre-configured build scripts for dev and production",
   "main": "scripts/cli.js",
   "bin": {
