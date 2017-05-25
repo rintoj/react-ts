@@ -6,10 +6,10 @@ const npm = require('./npm');
 const git = require('./git');
 const chalk = require('chalk');
 const nameUtil = require('name-util');
-const progress = require('print-progress')
+const progress = require('print-progress');
 const packageJson = require('../src/package.json');
 
-progress.configure({delay: 200})
+progress.configure({ delay: 200 });
 
 function resolvePath(target) {
   return path.resolve(/^\.\.?\//.test(target) ? `../${target}` : target);
@@ -125,13 +125,11 @@ function initGit(target, skipGit) {
     if (skipGit) {
       return Promise.resolve()
         .then(() => progress.done(chalk.gray('Skip git initialization...')))
-        .then(resolve)
+        .then(resolve);
     }
-    git.isGitDirectory().then(() => {
-      return Promise.resolve()
+    return git.isGitDirectory().then(() => Promise.resolve()
         .then(() => progress.done(`${chalk.gray('Skip git initialization... The folder is under git already')}`))
-        .then(resolve)
-    }, (error) => {
+        .then(resolve), () => {
       if (git.isAvailable()) {
         return Promise.resolve()
           .then(() => progress.doing(`${chalk.green('Initialize git...')}`))

@@ -1,5 +1,6 @@
 /* eslint import/no-extraneous-dependencies: ["error", {"peerDependencies": true}] */
-/* eslint import/no-dynamic-require: [false] */
+/* eslint-disable import/no-dynamic-require */
+/* eslint-disable global-require */
 // Ensure environment variables are read.
 require('./env');
 
@@ -10,7 +11,6 @@ const WebpackDevServer = require('webpack-dev-server');
 const clearConsole = require('react-dev-utils/clearConsole');
 const checkRequiredFiles = require('react-dev-utils/checkRequiredFiles');
 const {
-  choosePort,
   createCompiler,
   prepareProxy,
   prepareUrls,
@@ -39,7 +39,7 @@ if (!checkRequiredFiles([paths.template, paths.appModule])) {
   process.exit(1);
 }
 
-module.exports = function(requestedPort) {
+module.exports = function serve(requestedPort) {
   // We attempt to use the default port but if it is busy, we offer the user to
   // run on a different port. `detect()` Promise resolves to the next free port.
 
@@ -64,7 +64,8 @@ module.exports = function(requestedPort) {
   // Launch WebpackDevServer.
   devServer.listen(port, HOST, (err) => {
     if (err) {
-      return console.log(err);
+      console.log(err);
+      return;
     }
     if (isInteractive) {
       clearConsole();

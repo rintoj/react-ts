@@ -45,9 +45,8 @@ module.exports = (function gitCommands() {
   function commit(message, target) {
     if (isWin) {
       return run(`commit -a -m "${message}"`, target);
-    } else {
-      return run(`commit -a -m '${message}'`, target);
     }
+    return run(`commit -a -m '${message}'`, target);
   }
   git.commit = commit;
 

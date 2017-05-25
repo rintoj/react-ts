@@ -1,5 +1,7 @@
 /* eslint import/no-extraneous-dependencies: ["error", {"peerDependencies": true}] */
 /* eslint-disable no-console */
+/* eslint-disable global-require */
+/* eslint-disable import/no-dynamic-require */
 const fs = require('fs-extra');
 const path = require('path');
 const chalk = require('chalk');
@@ -8,15 +10,15 @@ const webpack = require('webpack');
 const copyPublicFolder = require('./copy');
 const FileSizeReporter = require('react-dev-utils/FileSizeReporter');
 
-const cwd = process.cwd()
-const paths = require(cwd + '/config/paths');
+const cwd = process.cwd();
+const paths = require(`${cwd}/config/paths`);
 
 module.exports = function buildProject(environment) {
   process.env.NODE_ENV = environment || process.env.NODE_ENV || 'production';
 
   const isProd = process.env.NODE_ENV === 'production';
   const useYarn = fs.existsSync(paths.yarnLockFile);
-  const webpackConfig = require(cwd + '/config/webpack.config');
+  const webpackConfig = require(`${cwd}/config/webpack.config`);
   const printFileSizesAfterBuild = FileSizeReporter.printFileSizesAfterBuild;
   const measureFileSizesBeforeBuild = FileSizeReporter.measureFileSizesBeforeBuild;
 
