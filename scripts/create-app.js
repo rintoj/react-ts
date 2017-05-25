@@ -6,12 +6,10 @@ const npm = require('./npm');
 const git = require('./git');
 const chalk = require('chalk');
 const nameUtil = require('name-util');
+const progress = require('print-progress')
 const packageJson = require('../src/package.json');
-const ProgressBar = require('progress');
 
-const progress = new ProgressBar(':message', {
-  total: Infinity,
-});
+progress.configure({delay: 200})
 
 function resolvePath(target) {
   return path.resolve(/^\.\.?\//.test(target) ? `../${target}` : target);
@@ -90,27 +88,10 @@ function createGitIgnore(target, files) {
   });
 }
 
-function printProgress(message, completed) {
-  progress.tick({
-    message: `  ${completed ? chalk.green('✓') : chalk.yellow('➟')} ${chalk.gray(message)}`,
-  });
-
-  return new Promise(resolve => setTimeout(() => {
-    if (completed) console.log();
-    resolve();
-  }, 500));
-}
-
-function printError(error) {
-  console.log();
-  console.log();
-  console.log(chalk.red(`ERROR: ${error}`));
-}
-
 function usage(name, noUsageInfo) {
   if (noUsageInfo) {
     console.log();
-    printProgress(chalk.green('Completed'));
+    console.log(chalk.green('Completed'));
     return;
   }
 
@@ -139,18 +120,29 @@ function usage(name, noUsageInfo) {
   `);
 }
 
-function initGit(target) {
+function initGit(target, skipGit) {
   return new Promise((resolve) => {
-    if (git.isAvailable()) {
+    if (skipGit) {
       return Promise.resolve()
-        .then(() => printProgress(`${chalk.green('Initialize git...')}`))
-        .then(() => git.init(target))
-        .then(() => git.addAll(target))
-        .then(() => git.commit('Initial commit'))
-        .then(() => printProgress('Initialize git', true))
-        .then(resolve);
+        .then(() => progress.done(chalk.gray('Skip git initialization...')))
+        .then(resolve)
     }
-    return printProgress(`Git not available... ${chalk.yellow('skipping init git')}`).then(resolve);
+    git.isGitDirectory().then(() => {
+      return Promise.resolve()
+        .then(() => progress.done(`${chalk.gray('Skip git initialization... The folder is under git already')}`))
+        .then(resolve)
+    }, (error) => {
+      if (git.isAvailable()) {
+        return Promise.resolve()
+          .then(() => progress.doing(`${chalk.green('Initialize git...')}`))
+          .then(() => git.init(target))
+          .then(() => git.addAll(target))
+          .then(() => git.commit('Initial commit'))
+          .then(() => progress.done('Initialize git'))
+          .then(resolve);
+      }
+      return progress.done(`Git not available... ${chalk.yellow('skipping init git')}`).then(resolve);
+    });
   });
 }
 
@@ -158,35 +150,36 @@ function installNodeModules(target, run) {
   if (!run) return Promise.resolve();
 
   return Promise.resolve()
-    .then(() => printProgress(`${chalk.green('Installing node modules...')} This may take time.`))
+    .then(() => progress.doing(`${chalk.green('Installing node modules...')} This may take time.`))
     .then(() => npm.install(target))
-    .then(() => printProgress('Installing node modules', true));
+    .then(() => progress.done('Installing node modules'));
 }
 
 module.exports = function createApp(name, options) {
   const config = Object.assign({
     installModules: false,
     noUsageInfo: true,
+    skipGit: false,
   }, options);
 
   const projectName = nameUtil.toDashedName(name.replace(/^[^a-z0-9]$/gi, ''));
-  const source = resolvePath(`${__dirname}/..`);
+  const source = resolvePath(`${__dirname}/../src`);
   const target = resolvePath(projectName);
 
   console.log('');
   return Promise.resolve()
     .then(() => isExists(target))
-    .then(() => printProgress('Creating target directory...'))
+    .then(() => progress.doing('Creating target directory...'))
     .then(() => createTargetDir(target))
-    .then(() => printProgress('Creating target directory', true))
-    .then(() => printProgress('Creating project files... '))
+    .then(() => progress.done('Creating target directory'))
+    .then(() => progress.doing('Creating project files... '))
     .then(() => copyDirectory(source, target))
     .then(() => copyPackageJson(target, name))
     .then(() => copyIndex(target, name))
-    .then(() => printProgress('Creating project files', true))
+    .then(() => progress.done('Creating project files... '))
     .then(() => createGitIgnore(target, ['node_modules/', 'coverage/', 'dist/']))
-    .then(() => initGit(target))
+    .then(() => initGit(target, config.skipGit))
     .then(() => installNodeModules(target, config.installModules))
     .then(() => usage(projectName, config.noUsageInfo))
-    .catch(printError);
+    .catch(error => progress.fail(error));
 };

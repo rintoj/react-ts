@@ -8,7 +8,7 @@ const isWin = /^win/.test(process.platform);
 module.exports = (function gitCommands() {
   const git = {};
 
-  function run(command, target) {
+  function run(command, target, noError) {
     return new Promise((resolve, reject) => {
       if (target != null) {
         shell.cd(target);
@@ -17,9 +17,11 @@ module.exports = (function gitCommands() {
         silent: true,
       }, (code, stdout, stderr) => {
         if (code !== 0) {
-          console.log(chalk.red(`git ${command} <== FAILED`));
-          console.log(chalk.red(`${stderr}`));
-          console.log();
+          if (!noError) {
+            console.log(chalk.red(`git ${command} <== FAILED`));
+            console.log(chalk.red(`${stderr}`));
+            console.log();
+          }
           return reject({
             exitCode: code,
           });
@@ -53,6 +55,11 @@ module.exports = (function gitCommands() {
     return commandExists(`git${isWin ? '.cmd' : ''}`);
   }
   git.isAvailable = isAvailable;
+
+  function isGitDirectory(target) {
+    return run('rev-parse --is-inside-work-tree', target, true);
+  }
+  git.isGitDirectory = isGitDirectory;
 
   return git;
 }());
