@@ -6,7 +6,7 @@ const npm = require('./npm');
 const git = require('./git');
 const chalk = require('chalk');
 const nameUtil = require('name-util');
-const packageJson = require('../package.json');
+const packageJson = require('../src/package.json');
 const ProgressBar = require('progress');
 
 const progress = new ProgressBar(':message', {
@@ -71,11 +71,13 @@ import * as React from 'react'
 import * as ReactDOM from 'react-dom'
 
 import { App } from './app'
+import { INITIAL_STATE } from './state'
+import { initialize } from 'statex'
 
-// hot load application state when in development mode
-if (process.env.NODE_ENV === 'development') {
-  require('../react-ts/hot-load')('${name}')
-}
+initialize(INITIAL_STATE, {
+  hotLoad: process.env.NODE_ENV !== 'production',
+  domain: '${name}'
+})
 
 ReactDOM.render(<App />, document.getElementById('root'))
 `, err => (err ? reject(err) : resolve()));

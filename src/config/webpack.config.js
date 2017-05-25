@@ -1,5 +1,6 @@
 /* eslint-disable no-console */
-const env = require('./env.js')('');
+/* eslint-disable import/no-extraneous-dependencies*/
+const env = require('react-ts/scripts/env.js')('');
 const paths = require('./paths');
 const chalk = require('chalk');
 const webpack = require('webpack');
@@ -47,8 +48,8 @@ module.exports = {
   entry: [
     paths.appModule,
   ].concat(isProd ? [] : [
-    'webpack/hot/dev-server',
-    `webpack-dev-server/client?http://${host}:${port}`,
+    require.resolve('react-dev-utils/webpackHotDevClient'),
+    require.resolve('react-error-overlay'),
   ]),
   output: {
     path: paths.dist,
@@ -160,6 +161,7 @@ module.exports = {
           removeAll: true,
         },
       },
+      canPrint: false,
     }),
 
   ] : [

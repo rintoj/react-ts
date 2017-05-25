@@ -4,22 +4,24 @@ const fs = require('fs-extra');
 const path = require('path');
 const chalk = require('chalk');
 const clean = require('./clean');
-const paths = require('./paths');
 const webpack = require('webpack');
 const copyPublicFolder = require('./copy');
 const FileSizeReporter = require('react-dev-utils/FileSizeReporter');
+
+const cwd = process.cwd()
+const paths = require(cwd + '/config/paths');
 
 module.exports = function buildProject(environment) {
   process.env.NODE_ENV = environment || process.env.NODE_ENV || 'production';
 
   const isProd = process.env.NODE_ENV === 'production';
   const useYarn = fs.existsSync(paths.yarnLockFile);
-  const webpackConfig = require('./webpack.config');
+  const webpackConfig = require(cwd + '/config/webpack.config');
   const printFileSizesAfterBuild = FileSizeReporter.printFileSizesAfterBuild;
   const measureFileSizesBeforeBuild = FileSizeReporter.measureFileSizesBeforeBuild;
 
-  console.log();
   console.log(chalk.gray(`Creating ${chalk.yellow(isProd ? 'production' : 'development')} build...`));
+  console.log();
 
   // Print out errors
   function printErrors(summary, errors) {

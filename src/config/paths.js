@@ -6,9 +6,11 @@ function resolvePath(relativePath) {
 
 module.exports = {
   appModule: resolvePath('./src/index.tsx'),
-  template: resolvePath('src/assets/index.html'),
-  splash: resolvePath('src/assets/splash.html'),
+  appPublic: resolvePath('public'),
+  template: resolvePath('src/index.html'),
   assets: resolvePath('src/assets'),
+  packageJson: resolvePath('./package.json'),
+  yarnLockFile: resolvePath('yarn.lock'),
   dist: resolvePath('dist'),
   publicUrl: './',
   nodeModules: resolvePath('node_modules'),
