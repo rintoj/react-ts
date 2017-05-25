@@ -1,3 +1,7 @@
+# v2.0.1
+
+- update usage
+
 # v2.0.0
 
 - **breaking change** - moved `src/react-ts` to `scripts`, except `webpack.config.js` and `paths` - which are now under `src/config`. Any other library dependent on these paths must reconfigure.
