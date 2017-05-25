@@ -1,3 +1,11 @@
+# v2.0.0
+
+- add error overlay - errors are shown right with in the browser
+- migrate from `react-reflux` to [statex](https://github.com/rintoj/statex)
+- fix - do not initialize git if the target folder is already under git
+- create-app: add option to skip git initialization
+- create-app: add option to install node modules
+
 # v1.1.1
 - fix git invocation on Windows #2
 
