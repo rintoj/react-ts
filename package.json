@@ -1,7 +1,7 @@
 {
   "name": "react-ts",
   "version": "2.0.0",
-  "description": "",
+  "description": "Create React apps using TypeScript 2, WebPack 2, StateX, Mocha, Chai, with pre-configured build scripts for dev and production",
   "main": "scripts/cli.js",
   "bin": {
     "react-ts": "./scripts/cli.js"
@@ -60,6 +60,13 @@
   "keywords": [
     "React",
     "TypeScript",
-    "Reflux"
-  ]
+    "StateX"
+  ],
+  "devDependencies": {
+    "eslint": "^3.19.0",
+    "eslint-config-airbnb": "^15.0.1",
+    "eslint-plugin-import": "^2.3.0",
+    "eslint-plugin-jsx-a11y": "^5.0.3",
+    "eslint-plugin-react": "^7.0.1"
+  }
 }

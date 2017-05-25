@@ -1,5 +1,6 @@
 # v2.0.0
 
+- **breaking change** - moved `src/react-ts` to `scripts`, except `webpack.config.js` and `paths` - which are now under `src/config`. Any other library dependent on these paths must reconfigure.
 - add error overlay - errors are shown right with in the browser
 - migrate from `react-reflux` to [statex](https://github.com/rintoj/statex)
 - fix - do not initialize git if the target folder is already under git
