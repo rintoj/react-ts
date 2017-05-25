@@ -19,9 +19,14 @@ This project is configured with
 
   Commands:
 
-    create <name>        Create react application with TypeScript and WebPack
-    serve [port]         Serve the project
-    build [environment]  Build the project
+    create [options] <name>  Create react application with TypeScript and WebPack
+
+      Options:
+          -s, --skip-git     Skip git initialization
+          -i, --install      Install node modules
+
+    serve [port]             Serve the project
+    build [environment]      Build the project
 
   Options:
 
