@@ -1,3 +1,7 @@
+# v2.0.2
+
+- Fixes [#3](https://github.com/rintoj/react-ts/issues/3) - Missing dependencies for tdd
+
 # v2.0.1
 
 - update usage
