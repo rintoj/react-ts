@@ -8,7 +8,7 @@ This project is configured with
   - [TypeScript](https://www.typescriptlang.org/)
   - [WebPack](https://webpack.js.org/)
   - [Hot Module Replacement](https://webpack.js.org/concepts/hot-module-replacement/) with app state preservation
-  - [React Reflux](https://github.com/rintoj/react-reflux) - (an implementation of flux)
+  - [StateX](https://github.com/rintoj/statex) - (an implementation of flux)
   - [Mocha](https://mochajs.org/) & [Chai](http://chaijs.com/) for testing
 
 ## Usage
